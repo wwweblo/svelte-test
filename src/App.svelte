@@ -1,61 +1,43 @@
 <script>
-  
-	  let showUsers = false;
-	  let users = [
-		  {id: 1, name: "Bob"},
-		  {id: 2, name: "Alice"},
-		  {id: 3, name: "Ben"},
-	  ];
-  
-	  function addUser (name) {
-		  if (name) {
-			  const newUser  = {
-				  id: users.length + 1,
-				  name: name
-			  };
-			  users = [...users, newUser ];
-		  }
-	  }
-  
-	  function toggleBool() {
-		  showUsers = !showUsers;
-	  }
-  </script>
-  
-  <main>
-	  <section>
-		  <input
-			  type="text"
-			  id="userInput"
-			  placeholder="Enter the name..." >
-		  <button on:click={() => addUser (document.getElementById('userInput').value)}>
-			  submit
-		  </button>
-	  </section>
-	  <section class="horisontalFlex">
-		  <input
-			  type="checkbox"
-			  name="showUsersBox" 
-			  id="showUsersBox"
-			  on:change={toggleBool}
-		  >
-		  <label for="showUsersBox">Show Names</label>
-	  </section>
-	  {#if showUsers}
-		  <ol>
-			  {#each users as user (user.id)}
-				  <li>
-					  {user.name}
-				  </li>
-			  {/each}
-		  </ol>
-	  {/if}
-  </main>
-  
-  <style>
-	  .horisontalFlex {
-		  display: flex;
-		  flex-direction: row;
-		  gap: 1rem;
-	  }
-  </style>
+
+  import UserList from "./components/UserList.svelte";
+  import UserForm from "./components/UserForm.svelte";
+
+  let users = [
+    {id: 1, name: 'John'},
+    {id: 2, name: 'Ben'},
+    {id: 3, name: 'Bob'},
+    {id: 4, name: 'Alice'},
+    {id: 5, name: 'Alan'},
+    {id: 6, name: 'Bruce'},
+  ]
+
+  function deleteUser(e){
+    const id = e.detail;
+    users = users.filter((item)=> item.id != id)
+  }
+  function addUser(e){
+    const name = e.detail;
+    const id = users.length+1;
+
+    users = [...users, {id, name}]
+
+    console.log(users)
+  }
+</script>
+
+<main>
+  <UserForm on:add-user={addUser}/>
+  <UserList
+    {users}
+    on:delete-user={deleteUser}/>
+</main>
+
+<style>
+  main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:1rem;
+  }
+</style>
