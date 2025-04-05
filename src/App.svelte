@@ -1,5 +1,4 @@
 <script>
-	import { each } from "svelte/internal";
   
 	  let showUsers = false;
 	  let users = [
