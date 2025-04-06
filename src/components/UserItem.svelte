@@ -1,6 +1,6 @@
 <script>
     import {createEventDispatcher} from 'svelte';
-    export let user = {id:undefined, name:undefined};
+    export let user = {id:undefined, name:undefined, age:undefined};
 
     const dispatch =  createEventDispatcher();
 
@@ -10,7 +10,8 @@
 </script>
 
 <div class="userCard">
-    {user.name}
+    <span class="username">{user.name}</span>
+    {user.age}
     <button
         class="ghost-button"
         on:click={() => handleDelete(user.id)}
@@ -43,5 +44,9 @@
     }
     .ghost-button:active{
         background-color: lightgray;
+    }
+
+    .username{
+        font-weight: 700;
     }
 </style>
